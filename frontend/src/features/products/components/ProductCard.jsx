@@ -12,14 +12,12 @@ import {motion} from 'framer-motion'
 
 export const ProductCard = ({id,title,image,price,thumbnail,brand,stockQuantity,handleAddRemoveFromWishlist,isWishlistCard,isAdminCard}) => {
 
-
     const navigate=useNavigate()
     const wishlistItems=useSelector(selectWishlistItems)
     const loggedInUser=useSelector(selectLoggedInUser)
     const cartItems=useSelector(selectCartItems)
     const dispatch=useDispatch()
     let isProductAlreadyinWishlist=-1
-
 
     const theme=useTheme()
     const is1410=useMediaQuery(theme.breakpoints.down(1410))
@@ -40,63 +38,64 @@ export const ProductCard = ({id,title,image,price,thumbnail,brand,stockQuantity,
         dispatch(addToCartAsync(data))
     }
 
+    return (
+        <>
+        {
+        isProductAlreadyinWishlist!==-1 ?
+        <Stack component={isAdminCard?"":isWishlistCard?"":is408?'':Paper} mt={is408?2:0} elevation={1} p={2} width={is408?'auto':is488?"200px":is608?"240px":is752?"300px":is932?'240px':is1410?'300px':'340px'} sx={{cursor:"pointer"}} onClick={()=>navigate(`/product-details/${id}`)}>
 
-  return (
-    <>
-
-    {
-    isProductAlreadyinWishlist!==-1 ?
-    <Stack component={isAdminCard?"":isWishlistCard?"":is408?'':Paper} mt={is408?2:0} elevation={1} p={2} width={is408?'auto':is488?"200px":is608?"240px":is752?"300px":is932?'240px':is1410?'300px':'340px'} sx={{cursor:"pointer"}} onClick={()=>navigate(`/product-details/${id}`)}>
-
-        {/* image display */}
-        <Stack>
-            {loggedInUser?.isAdmin ? <img onClick={()=>{console.log(loggedInUser)}} width={'100%'} style={{aspectRatio:1/1,objectFit:"contain"}} height={'100%'}  src={thumbnail} alt={`${title} photo unavailable`} /> : <img onClick={()=>{console.log(loggedInUser)}} width={'100%'} style={{aspectRatio:1/1,objectFit:"contain"}} height={'100%'}  src={image} alt={`${title} photo unavailable`} /> }
-        </Stack>
-
-        {/* lower section */}
-        <Stack flex={2} justifyContent={'flex-end'} spacing={1} rowGap={2}>
-
+            {/* image display */}
             <Stack>
-                <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
-                    <Typography variant='h6' fontWeight={400}>{title}</Typography>
-                    {
-                    !isAdminCard && 
-                    <motion.div whileHover={{scale:1.3,y:-10,zIndex:100}} whileTap={{scale:1}} transition={{duration:.4,type:"spring"}}>
-                        <Checkbox onClick={(e)=>e.stopPropagation()} checked={isProductAlreadyinWishlist} onChange={(e)=>handleAddRemoveFromWishlist(e,id)} icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:'red'}} />} />
-                    </motion.div>
-                    }
-                </Stack>
-                <Typography color={"text.secondary"}>{brand}</Typography>
+                {loggedInUser?.isAdmin ? 
+                    <img width={'100%'} style={{aspectRatio:1/1,objectFit:"contain"}} height={'100%'} src={thumbnail} alt={`${title} - cover image`} /> 
+                    : 
+                    <img width={'100%'} style={{aspectRatio:1/1,objectFit:"contain"}} height={'100%'} src={image} alt={`${title} - cover image`} /> 
+                }
             </Stack>
 
-            <Stack sx={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-                <Typography>₹{price}</Typography>
+            {/* lower section */}
+            <Stack flex={2} justifyContent={'flex-end'} spacing={1} rowGap={2}>
+
+                <Stack>
+                    <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
+                        <Typography variant='h6' fontWeight={400}>{title}</Typography>
+                        {
+                        !isAdminCard && 
+                        <motion.div whileHover={{scale:1.3,y:-10,zIndex:100}} whileTap={{scale:1}} transition={{duration:.4,type:"spring"}}>
+                            <Checkbox onClick={(e)=>e.stopPropagation()} checked={isProductAlreadyinWishlist} onChange={(e)=>handleAddRemoveFromWishlist(e,id)} icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:'red'}} />} />
+                        </motion.div>
+                        }
+                    </Stack>
+                    <Typography color={"text.secondary"}>by {brand}</Typography> {/* Changed to "by Author" */}
+                </Stack>
+
+                <Stack sx={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+                    <Typography>₹{price}</Typography>
+                    {
+                        !isWishlistCard? isProductAlreadyInCart?
+                        ''
+                        :
+                        !isAdminCard &&
+                        <motion.button whileHover={{scale:1.030}} whileTap={{scale:1}} onClick={(e)=>handleAddToCart(e)} style={{padding:"10px 15px",borderRadius:"3px",outline:"none",border:"none",cursor:"pointer",backgroundColor:"black",color:"white",fontSize:is408?'.9rem':is488?'.7rem':is500?'.8rem':'.9rem'}}>
+                            <div style={{display:"flex",alignItems:"center",columnGap:".5rem"}}>
+                                <p>Add To Cart</p>
+                            </div>
+                        </motion.button>
+                        :''
+                    }
+                    
+                </Stack>
                 {
-                    !isWishlistCard? isProductAlreadyInCart?
-                    ''
-                    :
-                    !isAdminCard &&
-                    <motion.button  whileHover={{scale:1.030}} whileTap={{scale:1}} onClick={(e)=>handleAddToCart(e)} style={{padding:"10px 15px",borderRadius:"3px",outline:"none",border:"none",cursor:"pointer",backgroundColor:"black",color:"white",fontSize:is408?'.9rem':is488?'.7rem':is500?'.8rem':'.9rem'}}>
-                        <div style={{display:"flex",alignItems:"center",columnGap:".5rem"}}>
-                            <p>Add To Cart</p>
-                        </div>
-                    </motion.button>
-                    :''
+                    stockQuantity<=20 && (
+                        <FormHelperText sx={{fontSize:".9rem"}} error>
+                            {stockQuantity===1 ? "Only 1 copy left" : "Only few copies left"} {/* Changed to "copy" instead of "stock" */}
+                        </FormHelperText>
+                    )
                 }
-                
             </Stack>
-            {
-                stockQuantity<=20 && (
-                    <FormHelperText sx={{fontSize:".9rem"}} error>{stockQuantity===1?"Only 1 stock is left":"Only few are left"}</FormHelperText>
-                )
-            }
-        </Stack>
-    </Stack> 
-    :''
-    
-    
-    }
-    
-    </>
-  )
+        </Stack> 
+        :''
+        }
+        </>
+    )
 }

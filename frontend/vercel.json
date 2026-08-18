@@ -11,6 +11,6 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://lending-library-backend-new.onrender.com"
+    "REACT_APP_BASE_URL": "https://lending-library-backend-new.onrender.com"
   }
 }
