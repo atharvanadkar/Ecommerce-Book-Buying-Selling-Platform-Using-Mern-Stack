@@ -1,13 +1,18 @@
-import { useSelector } from "react-redux"
-import { selectLoggedInUser } from "../AuthSlice"
-import { Navigate } from "react-router"
+import { useSelector } from "react-redux";
+import { selectLoggedInUser } from "../AuthSlice";
+import { Navigate } from "react-router-dom";
 
+export const Protected = ({ children }) => {
 
-export const Protected = ({children}) => {
-    const loggedInUser=useSelector(selectLoggedInUser)
+    const loggedInUser = useSelector(selectLoggedInUser);
 
-    if(loggedInUser?.isVerified){
-        return children
+    if (!loggedInUser) {
+        return <Navigate to="/login" replace />;
     }
-    return <Navigate to={'/login'} replace={true}/>
-}
+
+    if (!loggedInUser.isVerified) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return children;
+};

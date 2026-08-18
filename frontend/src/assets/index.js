@@ -4,6 +4,7 @@ import orderSuccessAnimation from './animations/orderSuccess.json'
 import noOrdersAnimation from './animations/noOrders.json'
 import emptyWishlistAnimation from './animations/emptyWishlist.json'
 import notFoundPageAnimation from './animations/notFoundPage.json'
+import bookAnimation from './animations/bookAnimation.json' // ← ADD THIS
 import banner1 from './images/banner1.jpg'
 import googlePlayPng from './images/googlePlay.png'
 import appStorePng from './images/appStore.png'
@@ -24,6 +25,7 @@ export {
     noOrdersAnimation,
     emptyWishlistAnimation,
     notFoundPageAnimation,
+    bookAnimation, // ← ADD THIS
     banner1,
     googlePlayPng,
     appStorePng,

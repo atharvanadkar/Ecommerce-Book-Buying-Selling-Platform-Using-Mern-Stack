@@ -1,9 +1,9 @@
-import {FormHelperText, Stack, TextField, Typography,Box, useTheme, useMediaQuery} from '@mui/material'
+import { FormHelperText, Stack, TextField, Typography, useTheme, useMediaQuery } from '@mui/material' // ← REMOVED Box
 import React, { useEffect } from 'react'
 import Lottie from 'lottie-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
-import { ecommerceOutlookAnimation, shoppingBagAnimation} from '../../../assets'
+import { bookAnimation } from '../../../assets'
 import {useDispatch,useSelector} from 'react-redux'
 import { LoadingButton } from '@mui/lab';
 import {selectLoggedInUser, signupAsync,selectSignupStatus, selectSignupError, clearSignupError, resetSignupStatus} from '../AuthSlice'
@@ -29,8 +29,7 @@ export const Signup = () => {
     else if(loggedInUser){
       navigate("/")
     }
-  },[loggedInUser])
-
+  },[loggedInUser, navigate]) // ← ADDED navigate
 
   // handles signup error and toast them
   useEffect(()=>{
@@ -39,7 +38,6 @@ export const Signup = () => {
     }
   },[error])
 
-  
   useEffect(()=>{
     if(status==='fullfilled'){
       toast.success("Welcome! Verify your email to start shopping on mern-ecommerce.")
@@ -49,7 +47,7 @@ export const Signup = () => {
       dispatch(clearSignupError())
       dispatch(resetSignupStatus())
     }
-  },[status])
+  },[status, dispatch, reset]) // ← ADDED dispatch and reset
 
   // this function handles signup and dispatches the signup action with credentails that api requires
   const handleSignup=(data)=>{
@@ -65,7 +63,7 @@ export const Signup = () => {
         !is900 &&
 
         <Stack bgcolor={'black'} flex={1} justifyContent={'center'} >
-          <Lottie animationData={ecommerceOutlookAnimation}/>
+          <Lottie animationData={bookAnimation}/>
         </Stack>
         
         }

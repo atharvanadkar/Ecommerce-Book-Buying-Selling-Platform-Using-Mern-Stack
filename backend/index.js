@@ -13,6 +13,7 @@ const userRoutes=require("./routes/User")
 const addressRoutes=require('./routes/Address')
 const reviewRoutes=require("./routes/Review")
 const wishlistRoutes=require("./routes/Wishlist")
+const donationRoutes = require("./routes/Donation"); // ADD THIS LINE
 const { connectToDB } = require("./database/db")
 
 dotenv.config();
@@ -40,6 +41,7 @@ server.use("/categories",categoryRoutes)
 server.use("/address",addressRoutes)
 server.use("/reviews",reviewRoutes)
 server.use("/wishlist",wishlistRoutes)
+server.use("/", donationRoutes); // ADD THIS LINE
 
 const url = process.env.MongoDB;
 
