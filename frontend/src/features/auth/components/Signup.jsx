@@ -60,7 +60,7 @@ export const Signup = () => {
     <Stack width={'100vw'} height={'100vh'} flexDirection={'row'} sx={{overflowY:"hidden"}}>
 
       {
-        !is480 &&
+        !is900 &&
         <Stack bgcolor={'black'} flex={1} justifyContent={'center'} >
           <Lottie animationData={bookAnimation}/>
         </Stack>

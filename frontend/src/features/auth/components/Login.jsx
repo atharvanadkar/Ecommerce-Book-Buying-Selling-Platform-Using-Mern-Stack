@@ -98,7 +98,7 @@ export const Login = () => {
     <Stack width={'100vw'} height={'100vh'} flexDirection={'row'} sx={{overflowY:"hidden"}}>
         
         {
-          !is480 && 
+          !is900 && 
           <Stack bgcolor={'black'} flex={1} justifyContent={'center'} alignItems={'center'}>
             <Lottie animationData={bookAnimation} style={{ width: '80%', height: '80%' }}/>
             <Typography color="white" variant="body2" sx={{ mt: 2, opacity: 0.6 }}>
