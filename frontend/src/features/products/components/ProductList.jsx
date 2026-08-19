@@ -33,7 +33,6 @@ const sortOptions=[
     {name:"Price: high to low",sort:"price",order:"desc"},
 ]
 
-
 const bannerImages=[banner1,banner3,banner2,banner4]
 
 export const ProductList = () => {
@@ -48,6 +47,7 @@ export const ProductList = () => {
     const is600=useMediaQuery(theme.breakpoints.down(600))
     const is500=useMediaQuery(theme.breakpoints.down(500))
     const is488=useMediaQuery(theme.breakpoints.down(488))
+    const is400=useMediaQuery(theme.breakpoints.down(400))
 
     const brands=useSelector(selectBrands)
     const categories=useSelector(selectCategories)
@@ -99,7 +99,6 @@ export const ProductList = () => {
         setPage(1)
     },[totalResults])
 
-
     useEffect(()=>{
         const finalFilters={...filters}
 
@@ -113,7 +112,6 @@ export const ProductList = () => {
         dispatch(fetchProductsAsync(finalFilters))
         
     },[filters,page,sort])
-
 
     const handleAddRemoveFromWishlist=(e,productId)=>{
         if(e.target.checked){
@@ -170,7 +168,6 @@ export const ProductList = () => {
             dispatch(resetCartItemAddStatus())
         }
     },[])
-
 
     const handleFilterClose=()=>{
         dispatch(toggleFilters())
@@ -263,7 +260,7 @@ export const ProductList = () => {
                 {
                     !is600 && 
                 
-                <Stack sx={{width:"100%",height:is800?"400px":is1200?"500px":"600px",objectFit:"contain"}}>
+                <Stack sx={{width:"100%",height:{xs:"200px",sm:"300px",md:"400px",lg:"500px"},objectFit:"contain"}}>
                     <ProductBanner images={bannerImages}/>
                 </Stack>
                 }
@@ -272,9 +269,9 @@ export const ProductList = () => {
                 <Stack rowGap={5} mt={is600?2:0}>
 
                     {/* sort options */}
-                    <Stack flexDirection={'row'} mr={'2rem'} justifyContent={'flex-end'} alignItems={'center'} columnGap={5}>
+                    <Stack flexDirection={'row'} mr={is400?1:2} justifyContent={'flex-end'} alignItems={'center'} columnGap={5}>
                                         
-                        <Stack alignSelf={'flex-end'} width={'12rem'}>
+                        <Stack alignSelf={'flex-end'} width={is400?'8rem':'12rem'}>
                             <FormControl fullWidth>
                                     <InputLabel id="sort-dropdown">Sort</InputLabel>
                                     <Select
@@ -297,18 +294,64 @@ export const ProductList = () => {
                     </Stack>
 
                     {/* product grid */}
-                    <Grid gap={is700?1:2} container justifyContent={'center'} alignContent={'center'}>
+                    <Grid 
+                        container 
+                        spacing={{ xs: 1, sm: 2, md: 3 }}
+                        justifyContent="center"
+                        sx={{ px: { xs: 1, sm: 2, md: 3 } }}
+                    >
                         {
                             products.map((product)=>(
-                                 <ProductCard key={product._id} image={product?.images[0]} id={product._id} title={product.title} thumbnail={product.thumbnail} brand={product.brand.name} price={product.price} handleAddRemoveFromWishlist={handleAddRemoveFromWishlist}/>
+                                <Grid 
+                                    item 
+                                    xs={6} 
+                                    sm={4} 
+                                    md={3} 
+                                    lg={3} 
+                                    xl={2} 
+                                    key={product._id}
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                    <ProductCard 
+                                        image={product?.images[0]} 
+                                        id={product._id} 
+                                        title={product.title} 
+                                        thumbnail={product.thumbnail} 
+                                        brand={product.brand.name} 
+                                        price={product.price} 
+                                        handleAddRemoveFromWishlist={handleAddRemoveFromWishlist}
+                                    />
+                                </Grid>
                             ))
                         }
                     </Grid>
                     
                     {/* pagination */}
                     <Stack alignSelf={is488?'center':'flex-end'} mr={is488?0:5} rowGap={2} p={is488?1:0}>
-                        <Pagination size={is488?'medium':'large'} page={page}  onChange={(e,page)=>setPage(page)} count={Math.ceil(totalResults/ITEMS_PER_PAGE)} variant="outlined" shape="rounded" />
-                        <Typography textAlign={'center'}>Showing {(page-1)*ITEMS_PER_PAGE+1} to {page*ITEMS_PER_PAGE>totalResults?totalResults:page*ITEMS_PER_PAGE} of {totalResults} results</Typography>
+                        <Pagination 
+                            size={is488?'medium':'large'} 
+                            page={page}  
+                            onChange={(e,page)=>setPage(page)} 
+                            count={Math.ceil(totalResults/ITEMS_PER_PAGE)} 
+                            variant="outlined" 
+                            shape="rounded" 
+                            sx={{
+                                '& .MuiPaginationItem-root': {
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                                }
+                            }}
+                        />
+                        <Typography 
+                            textAlign={'center'}
+                            sx={{
+                                fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }
+                            }}
+                        >
+                            Showing {(page-1)*ITEMS_PER_PAGE+1} to {page*ITEMS_PER_PAGE>totalResults?totalResults:page*ITEMS_PER_PAGE} of {totalResults} results
+                        </Typography>
                     </Stack>    
                 
                 </Stack>

@@ -4,6 +4,7 @@ import { ProductList } from '../features/products/components/ProductList'
 import { resetAddressStatus, selectAddressStatus } from '../features/address/AddressSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { Footer } from '../features/footer/Footer'
+import { Container } from '@mui/material'
 
 export const HomePage = () => {
 
@@ -19,7 +20,9 @@ export const HomePage = () => {
   return (
     <>
       <Navbar isProductList={true} />
-      <ProductList />
+      <Container maxWidth="xl" sx={{ px: { xs: 1, sm: 2, md: 3 }, mt: { xs: 1, sm: 2 } }}>
+        <ProductList />
+      </Container>
       <Footer />
     </>
   )

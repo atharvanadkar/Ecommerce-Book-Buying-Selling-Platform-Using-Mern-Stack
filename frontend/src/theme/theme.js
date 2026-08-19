@@ -13,8 +13,6 @@ export const theme = createTheme({
     },
   },
 
-  
-
   breakpoints: {
     values: {
       xs: 0,
@@ -26,9 +24,8 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily:"Poppins, sans-serif",
-    h1: {  // -1rem rule
+    h1: {
       fontSize: "6rem",
-
       "@media (max-width:960px)": {
         fontSize: "5rem",
       },
@@ -39,12 +36,11 @@ export const theme = createTheme({
         fontSize: "2.5rem",
       },
     },
-    h2: {  // -7 formula
+    h2: {
       fontSize: "3.75rem",
       "@media (max-width:960px)": {
         fontSize: "3rem",
       },
-
       "@media (max-width:662px)": {
         fontSize: "2.3rem",
       },
@@ -52,19 +48,17 @@ export const theme = createTheme({
         fontSize: "2.2rem",
       },
     },
-    h3: {  // -6 formula
+    h3: {
       fontSize: "3rem",
       "@media (max-width:960px)": {
         fontSize: "2.4rem",
       },
-      
       "@media (max-width:662px)": {
         fontSize: "2rem",
       },
       "@media (max-width:414px)": {
         fontSize: "1.7rem",
       },
-
     },
     h4: {
        fontSize: "2.125rem",
@@ -73,6 +67,9 @@ export const theme = createTheme({
       },
       "@media (max-width:600px)": {
         fontSize: "1.25rem",
+      },
+      "@media (max-width:414px)": {
+        fontSize: "1.1rem",
       },
     },
     h5: {
@@ -83,6 +80,9 @@ export const theme = createTheme({
       "@media (max-width:600px)": {
         fontSize: "1.1rem",
       },
+      "@media (max-width:414px)": {
+        fontSize: "1rem",
+      },
     },
     h6: {
       fontSize: "1.25rem",
@@ -92,6 +92,9 @@ export const theme = createTheme({
       "@media (max-width:600px)": {
         fontSize: "1rem",
       },
+      "@media (max-width:414px)": {
+        fontSize: "0.9rem",
+      },
     },
     body1: {
       fontSize: "1rem",
@@ -100,6 +103,9 @@ export const theme = createTheme({
       },
       "@media (max-width:600px)": {
         fontSize: ".9rem",
+      },
+      "@media (max-width:414px)": {
+        fontSize: ".85rem",
       },
     },
     body2: {
@@ -111,7 +117,55 @@ export const theme = createTheme({
         fontSize: "1rem",
       },
       "@media (max-width:480px)": {
-        fontSize: ".97rem",
+        fontSize: ".9rem",
+      },
+      "@media (max-width:414px)": {
+        fontSize: ".85rem",
+      },
+    },
+    button: {
+      "@media (max-width:600px)": {
+        fontSize: "0.8rem",
+      },
+      "@media (max-width:414px)": {
+        fontSize: "0.7rem",
+      },
+    },
+  },
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          paddingLeft: "16px",
+          paddingRight: "16px",
+          "@media (max-width:600px)": {
+            paddingLeft: "8px",
+            paddingRight: "8px",
+          },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          "@media (max-width:600px)": {
+            padding: "8px",
+          },
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          "@media (max-width:600px)": {
+            padding: "6px 12px",
+            fontSize: "0.75rem",
+          },
+          "@media (max-width:414px)": {
+            padding: "4px 10px",
+            fontSize: "0.65rem",
+          },
+        },
       },
     },
   },

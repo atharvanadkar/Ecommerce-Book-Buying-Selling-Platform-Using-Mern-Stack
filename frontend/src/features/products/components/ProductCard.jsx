@@ -42,14 +42,42 @@ export const ProductCard = ({id,title,image,price,thumbnail,brand,stockQuantity,
         <>
         {
         isProductAlreadyinWishlist!==-1 ?
-        <Stack component={isAdminCard?"":isWishlistCard?"":is408?'':Paper} mt={is408?2:0} elevation={1} p={2} width={is408?'auto':is488?"200px":is608?"240px":is752?"300px":is932?'240px':is1410?'300px':'340px'} sx={{cursor:"pointer"}} onClick={()=>navigate(`/product-details/${id}`)}>
+        <Stack 
+            component={isAdminCard?"":isWishlistCard?"":is408?'':Paper} 
+            mt={is408?2:0} 
+            elevation={1} 
+            p={2} 
+            width={is408?'100%':is488?"160px":is608?"180px":is752?"220px":is932?'200px':is1410?'240px':'280px'} 
+            sx={{cursor:"pointer"}} 
+            onClick={()=>navigate(`/product-details/${id}`)}
+        >
 
             {/* image display */}
             <Stack>
                 {loggedInUser?.isAdmin ? 
-                    <img width={'100%'} style={{aspectRatio:1/1,objectFit:"contain"}} height={'100%'} src={thumbnail} alt={`${title} - cover image`} /> 
+                    <img 
+                        width={'100%'} 
+                        style={{
+                            aspectRatio:'1/1',
+                            objectFit:'contain',
+                            maxHeight: { xs: '150px', sm: '200px', md: '250px' }
+                        }} 
+                        height={'100%'} 
+                        src={thumbnail} 
+                        alt={`${title} - cover image`} 
+                    /> 
                     : 
-                    <img width={'100%'} style={{aspectRatio:1/1,objectFit:"contain"}} height={'100%'} src={image} alt={`${title} - cover image`} /> 
+                    <img 
+                        width={'100%'} 
+                        style={{
+                            aspectRatio:'1/1',
+                            objectFit:'contain',
+                            maxHeight: { xs: '150px', sm: '200px', md: '250px' }
+                        }} 
+                        height={'100%'} 
+                        src={image} 
+                        alt={`${title} - cover image`} 
+                    /> 
                 }
             </Stack>
 
@@ -58,26 +86,73 @@ export const ProductCard = ({id,title,image,price,thumbnail,brand,stockQuantity,
 
                 <Stack>
                     <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
-                        <Typography variant='h6' fontWeight={400}>{title}</Typography>
+                        <Typography 
+                            variant='h6' 
+                            fontWeight={400}
+                            sx={{
+                                fontSize: { xs: '0.8rem', sm: '0.9rem', md: '1rem' },
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                                maxWidth: { xs: '100px', sm: '130px', md: '170px' }
+                            }}
+                        >
+                            {title}
+                        </Typography>
                         {
                         !isAdminCard && 
                         <motion.div whileHover={{scale:1.3,y:-10,zIndex:100}} whileTap={{scale:1}} transition={{duration:.4,type:"spring"}}>
-                            <Checkbox onClick={(e)=>e.stopPropagation()} checked={isProductAlreadyinWishlist} onChange={(e)=>handleAddRemoveFromWishlist(e,id)} icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:'red'}} />} />
+                            <Checkbox 
+                                onClick={(e)=>e.stopPropagation()} 
+                                checked={isProductAlreadyinWishlist} 
+                                onChange={(e)=>handleAddRemoveFromWishlist(e,id)} 
+                                icon={<FavoriteBorder />} 
+                                checkedIcon={<Favorite sx={{color:'red'}} />} 
+                                size="small"
+                            />
                         </motion.div>
                         }
                     </Stack>
-                    <Typography color={"text.secondary"}>by {brand}</Typography> {/* Changed to "by Author" */}
+                    <Typography 
+                        color={"text.secondary"}
+                        sx={{
+                            fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }
+                        }}
+                    >
+                        by {brand}
+                    </Typography>
                 </Stack>
 
                 <Stack sx={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-                    <Typography>₹{price}</Typography>
+                    <Typography 
+                        sx={{
+                            fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem' },
+                            fontWeight: 600
+                        }}
+                    >
+                        ₹{price}
+                    </Typography>
                     {
                         !isWishlistCard? isProductAlreadyInCart?
                         ''
                         :
                         !isAdminCard &&
-                        <motion.button whileHover={{scale:1.030}} whileTap={{scale:1}} onClick={(e)=>handleAddToCart(e)} style={{padding:"10px 15px",borderRadius:"3px",outline:"none",border:"none",cursor:"pointer",backgroundColor:"black",color:"white",fontSize:is408?'.9rem':is488?'.7rem':is500?'.8rem':'.9rem'}}>
-                            <div style={{display:"flex",alignItems:"center",columnGap:".5rem"}}>
+                        <motion.button 
+                            whileHover={{scale:1.030}} 
+                            whileTap={{scale:1}} 
+                            onClick={(e)=>handleAddToCart(e)} 
+                            style={{
+                                padding: is408 ? "6px 10px" : is488 ? "6px 12px" : "8px 15px",
+                                borderRadius:"3px",
+                                outline:"none",
+                                border:"none",
+                                cursor:"pointer",
+                                backgroundColor:"black",
+                                color:"white",
+                                fontSize: is408 ? '0.7rem' : is488 ? '0.65rem' : is500 ? '0.7rem' : '0.8rem'
+                            }}
+                        >
+                            <div style={{display:"flex",alignItems:"center",columnGap:".3rem"}}>
                                 <p>Add To Cart</p>
                             </div>
                         </motion.button>
@@ -87,8 +162,13 @@ export const ProductCard = ({id,title,image,price,thumbnail,brand,stockQuantity,
                 </Stack>
                 {
                     stockQuantity<=20 && (
-                        <FormHelperText sx={{fontSize:".9rem"}} error>
-                            {stockQuantity===1 ? "Only 1 copy left" : "Only few copies left"} {/* Changed to "copy" instead of "stock" */}
+                        <FormHelperText 
+                            sx={{
+                                fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }
+                            }} 
+                            error
+                        >
+                            {stockQuantity===1 ? "Only 1 copy left" : "Only few copies left"}
                         </FormHelperText>
                     )
                 }

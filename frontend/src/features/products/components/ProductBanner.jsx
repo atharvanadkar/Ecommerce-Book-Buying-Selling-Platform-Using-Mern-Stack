@@ -1,29 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Box, useTheme, Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 export const ProductBanner = ({ images }) => {
-    const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [autoPlay, setAutoPlay] = useState(true);
     const maxSteps = images?.length || 0;
 
-    // Auto-play functionality
     useEffect(() => {
         if (!autoPlay || maxSteps === 0) return;
-        
         const interval = setInterval(() => {
             setActiveStep((prevActiveStep) => 
                 prevActiveStep === maxSteps - 1 ? 0 : prevActiveStep + 1
             );
         }, 3000);
-
         return () => clearInterval(interval);
     }, [autoPlay, maxSteps]);
 
-    // If no images, return nothing
-    if (!images || images.length === 0) {
-        return null;
-    }
+    if (!images || images.length === 0) return null;
 
     const goToSlide = (index) => {
         setAutoPlay(false);
@@ -32,18 +25,17 @@ export const ProductBanner = ({ images }) => {
     };
 
     return (
-        <Container maxWidth="xl" sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+        <Container maxWidth="xl" sx={{ px: { xs: 1, sm: 2, md: 3 }, py: { xs: 1, sm: 2 } }}>
             <Box sx={{ 
                 position: 'relative', 
                 width: '100%', 
                 overflow: 'hidden',
-                borderRadius: 2,
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                borderRadius: { xs: 1, sm: 2 },
+                boxShadow: '0 2px 10px rgba(0,0,0,0.08)'
             }}>
-                {/* Image Display with Smooth Transitions */}
                 <Box sx={{ 
                     width: '100%', 
-                    height: { xs: 180, sm: 250, md: 350, lg: 400 }, 
+                    height: { xs: 150, sm: 200, md: 280, lg: 350 }, 
                     position: 'relative',
                     backgroundColor: '#f5f5f5'
                 }}>
@@ -58,8 +50,7 @@ export const ProductBanner = ({ images }) => {
                                 top: 0,
                                 left: 0,
                                 opacity: activeStep === index ? 1 : 0,
-                                transition: 'opacity 0.8s ease-in-out',
-                                cursor: 'default' // ← Removed pointer cursor
+                                transition: 'opacity 0.8s ease-in-out'
                             }}
                         >
                             <Box
@@ -67,8 +58,7 @@ export const ProductBanner = ({ images }) => {
                                 sx={{
                                     width: '100%',
                                     height: '100%',
-                                    objectFit: 'cover',
-                                    borderRadius: 2
+                                    objectFit: 'cover'
                                 }}
                                 src={image}
                                 alt={`Banner ${index + 1}`}
@@ -77,17 +67,16 @@ export const ProductBanner = ({ images }) => {
                     ))}
                 </Box>
 
-                {/* Navigation Dots */}
                 {maxSteps > 1 && (
                     <Box
                         sx={{
                             position: 'absolute',
-                            bottom: 16,
+                            bottom: { xs: 8, sm: 12, md: 16 },
                             left: 0,
                             right: 0,
                             display: 'flex',
                             justifyContent: 'center',
-                            gap: 1,
+                            gap: { xs: 0.5, sm: 1 },
                             zIndex: 10
                         }}
                     >
@@ -96,11 +85,11 @@ export const ProductBanner = ({ images }) => {
                                 key={index}
                                 onClick={() => goToSlide(index)}
                                 sx={{
-                                    width: { xs: 8, sm: 10, md: 12 },
-                                    height: { xs: 8, sm: 10, md: 12 },
+                                    width: { xs: 6, sm: 8, md: 10 },
+                                    height: { xs: 6, sm: 8, md: 10 },
                                     borderRadius: '50%',
                                     cursor: 'pointer',
-                                    backgroundColor: activeStep === index ? '#1976d2' : 'rgba(255,255,255,0.7)',
+                                    backgroundColor: activeStep === index ? '#1976d2' : 'rgba(255,255,255,0.6)',
                                     transition: 'all 0.3s ease',
                                     '&:hover': {
                                         transform: 'scale(1.2)',

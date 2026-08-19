@@ -28,6 +28,7 @@ export const Navbar=({isProductList=false})=> {
   const dispatch=useDispatch()
   const theme=useTheme()
   const is480=useMediaQuery(theme.breakpoints.down(480))
+  const is380=useMediaQuery(theme.breakpoints.down(380))
 
   const wishlistItems=useSelector(selectWishlistItems)
   const isProductFilterOpen=useSelector(selectProductIsFilterOpen)
@@ -65,16 +66,46 @@ export const Navbar=({isProductList=false})=> {
 
   return (
     <AppBar position="sticky" sx={{backgroundColor:"white",boxShadow:"none",color:"text.primary"}}>
-        <Toolbar sx={{p:1,height:"4rem",display:"flex",justifyContent:"space-around"}}>
-
-          <Typography variant="h6" noWrap component="a" href="/" sx={{ mr: 2, display: { xs: 'none', md: 'flex' },fontWeight: 700, letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none', }}>
+        <Toolbar sx={{ 
+          p: { xs: 0.5, sm: 1 }, 
+          height: { xs: '3.5rem', sm: '4rem' },
+          display: "flex", 
+          justifyContent: "space-between",
+          flexWrap: 'wrap'
+        }}>
+          <Typography 
+            variant="h6" 
+            noWrap 
+            component="a" 
+            href="/" 
+            sx={{ 
+              fontSize: { xs: '0.8rem', sm: '1rem', md: '1.25rem' },
+              fontWeight: 700, 
+              letterSpacing: { xs: '.1rem', sm: '.2rem', md: '.3rem' }, 
+              color: 'inherit', 
+              textDecoration: 'none',
+              mr: { xs: 1, sm: 2 }
+            }}
+          >
             The Lending Library
           </Typography>
 
-          <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'center'} columnGap={2}>
+          <Stack 
+            flexDirection={'row'} 
+            alignItems={'center'} 
+            justifyContent={'center'} 
+            columnGap={{ xs: 1, sm: 2 }}
+          >
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={userInfo?.name} src="null" />
+                <Avatar 
+                  alt={userInfo?.name} 
+                  src="null" 
+                  sx={{ 
+                    width: { xs: 28, sm: 32, md: 40 },
+                    height: { xs: 28, sm: 32, md: 40 }
+                  }}
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -93,7 +124,6 @@ export const Navbar=({isProductList=false})=> {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {/* DONATE BUTTON FOR REGULAR USERS - ADDED BACK */}
               {
                 !(loggedInUser?.isAdmin) && 
                 <MenuItem onClick={handleCloseUserMenu}>
@@ -116,15 +146,35 @@ export const Navbar=({isProductList=false})=> {
                 <Typography color={'text.primary'} sx={{textDecoration:"none"}} textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
-            <Typography variant='h6' fontWeight={300}>{is480?`${userInfo?.name.toString().split(" ")[0]}`:`Hey👋, ${userInfo?.name}`}</Typography>
-            {loggedInUser?.isAdmin && <Button variant='contained' onClick={()=>{navigate("/admin/dashboard")}} >Admin</Button>}
-            <Stack sx={{flexDirection:"row",columnGap:"1rem",alignItems:"center",justifyContent:"center"}}>
+            <Typography 
+              variant='h6' 
+              fontWeight={300}
+              sx={{
+                fontSize: { xs: '0.7rem', sm: '0.9rem', md: '1rem' },
+                display: { xs: 'none', sm: 'block' }
+              }}
+            >
+              {is480 ? `${userInfo?.name.toString().split(" ")[0]}` : `Hey👋, ${userInfo?.name}`}
+            </Typography>
+            {loggedInUser?.isAdmin && 
+              <Button 
+                variant='contained' 
+                onClick={()=>{navigate("/admin/dashboard")}}
+                sx={{
+                  fontSize: { xs: '0.6rem', sm: '0.8rem' },
+                  padding: { xs: '4px 8px', sm: '6px 16px' }
+                }}
+              >
+                Admin
+              </Button>
+            }
+            <Stack sx={{flexDirection:"row",columnGap:{ xs: 0.5, sm: 1 },alignItems:"center",justifyContent:"center"}}>
 
             {
             cartItems?.length>0 && 
             <Badge  badgeContent={cartItems.length} color='error'>
-              <IconButton onClick={()=>navigate("/cart")}>
-                <ShoppingCartOutlinedIcon />
+              <IconButton onClick={()=>navigate("/cart")} size={is480 ? "small" : "medium"}>
+                <ShoppingCartOutlinedIcon sx={{ fontSize: { xs: 20, sm: 24 } }} />
                 </IconButton>
             </Badge>
             }
@@ -133,12 +183,23 @@ export const Navbar=({isProductList=false})=> {
               !loggedInUser?.isAdmin &&
                   <Stack>
                       <Badge badgeContent={wishlistItems?.length} color='error'>
-                          <IconButton component={Link} to={"/wishlist"}><FavoriteBorderIcon /></IconButton>
+                          <IconButton component={Link} to={"/wishlist"} size={is480 ? "small" : "medium"}>
+                            <FavoriteBorderIcon sx={{ fontSize: { xs: 20, sm: 24 } }} />
+                          </IconButton>
                       </Badge>
                   </Stack>
             }
             {
-              isProductList && <IconButton onClick={handleToggleFilters}><TuneIcon sx={{color:isProductFilterOpen?"black":""}}/></IconButton>
+              isProductList && 
+              <IconButton 
+                onClick={handleToggleFilters} 
+                size={is480 ? "small" : "medium"}
+              >
+                <TuneIcon sx={{ 
+                  color: isProductFilterOpen ? "black" : "",
+                  fontSize: { xs: 20, sm: 24 }
+                }}/>
+              </IconButton>
             }
             
             </Stack>

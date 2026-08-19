@@ -1,8 +1,11 @@
 import React from 'react'
 import { Signup } from '../features/auth/components/Signup'
+import { Container } from '@mui/material'
 
 export const SignupPage = () => {
   return (
-    <Signup/>
+    <Container maxWidth={false} disableGutters sx={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
+      <Signup />
+    </Container>
   )
 }
