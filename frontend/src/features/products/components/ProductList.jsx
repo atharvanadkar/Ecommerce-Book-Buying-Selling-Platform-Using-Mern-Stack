@@ -111,7 +111,7 @@ export const ProductList = () => {
 
         dispatch(fetchProductsAsync(finalFilters))
         
-    },[filters,page,sort])
+    },[filters,page,sort, dispatch])
 
     const handleAddRemoveFromWishlist=(e,productId)=>{
         if(e.target.checked){
@@ -256,14 +256,10 @@ export const ProductList = () => {
         <Stack mb={'3rem'}>
             
 
-                {/* banners section */}
-                {
-                    !is600 && 
-                
-                <Stack sx={{width:"100%",height:{xs:"200px",sm:"300px",md:"400px",lg:"500px"},objectFit:"contain"}}>
+                {/* banners section - SHOWS ON ALL SCREENS */}
+                <Stack sx={{width:"100%",height:{xs:"120px",sm:"200px",md:"300px",lg:"400px"},objectFit:"contain",mb:2}}>
                     <ProductBanner images={bannerImages}/>
                 </Stack>
-                }
 
                 {/* products */}
                 <Stack rowGap={5} mt={is600?2:0}>

@@ -25,17 +25,17 @@ export const ProductBanner = ({ images }) => {
     };
 
     return (
-        <Container maxWidth="xl" sx={{ px: { xs: 1, sm: 2, md: 3 }, py: { xs: 1, sm: 2 } }}>
+        <Container maxWidth="xl" sx={{ px: { xs: 0.5, sm: 2, md: 3 }, py: { xs: 0.5, sm: 2 } }}>
             <Box sx={{ 
                 position: 'relative', 
                 width: '100%', 
                 overflow: 'hidden',
-                borderRadius: { xs: 1, sm: 2 },
+                borderRadius: { xs: 0.5, sm: 2 },
                 boxShadow: '0 2px 10px rgba(0,0,0,0.08)'
             }}>
                 <Box sx={{ 
                     width: '100%', 
-                    height: { xs: 150, sm: 200, md: 280, lg: 350 }, 
+                    height: { xs: 120, sm: 200, md: 280, lg: 350 }, 
                     position: 'relative',
                     backgroundColor: '#f5f5f5'
                 }}>
@@ -71,7 +71,7 @@ export const ProductBanner = ({ images }) => {
                     <Box
                         sx={{
                             position: 'absolute',
-                            bottom: { xs: 8, sm: 12, md: 16 },
+                            bottom: { xs: 4, sm: 12, md: 16 },
                             left: 0,
                             right: 0,
                             display: 'flex',
@@ -85,8 +85,8 @@ export const ProductBanner = ({ images }) => {
                                 key={index}
                                 onClick={() => goToSlide(index)}
                                 sx={{
-                                    width: { xs: 6, sm: 8, md: 10 },
-                                    height: { xs: 6, sm: 8, md: 10 },
+                                    width: { xs: 5, sm: 8, md: 10 },
+                                    height: { xs: 5, sm: 8, md: 10 },
                                     borderRadius: '50%',
                                     cursor: 'pointer',
                                     backgroundColor: activeStep === index ? '#1976d2' : 'rgba(255,255,255,0.6)',
